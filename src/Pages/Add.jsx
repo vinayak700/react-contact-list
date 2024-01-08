@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { addContact, contactSelector } from "../Redux/contactReducer";
 
 const styles = {
   container: {
@@ -31,7 +32,7 @@ const styles = {
 const ContactAdd = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const contacts = useSelector((state) => state);
+  const { contactList } = useSelector(contactSelector);
   const [contact, setContact] = useState({
     name: "",
     email: "",
@@ -44,8 +45,12 @@ const ContactAdd = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newContact = { id: contacts[contacts.length - 1].id + 1, ...contact };
-    dispatch({ type: "ADD_CONTACT", payload: newContact });
+    const newContact = {
+      id: contactList[contactList.length - 1].id + 1,
+      ...contact,
+    };
+    // dispatch({ type: "ADD_CONTACT", payload: newContact });
+    dispatch(() => addContact(newContact));
     toast.success("Contact added successfully");
     navigate("/");
   };

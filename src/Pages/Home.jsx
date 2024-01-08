@@ -1,16 +1,21 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  contactSelector,
+  deleteContact,
+  fetchContacts,
+} from "../Redux/contactReducer";
 
 const Home = () => {
-  const contacts = useSelector((state) => state);
+  const { contactList } = useSelector(contactSelector);
   const dispatch = useDispatch();
-  console.log(contacts);
 
-  // Fetching Contacts through an API only for the first render
-
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <div style={styles.contactsContainer}>
@@ -36,7 +41,7 @@ const Home = () => {
                 </tr>
               </thead>
               <tbody>
-                {contacts.map((contact, id) => (
+                {contactList.map((contact, id) => (
                   <tr key={id} style={id % 2 === 0 ? styles.oddRow : null}>
                     <td style={styles.td}>{id + 1}</td>
                     <td style={styles.td}>{contact.name}</td>
@@ -52,10 +57,11 @@ const Home = () => {
                       <button
                         type="button"
                         onClick={() => {
-                          dispatch({
-                            type: "DELETE_CONTACT",
-                            payload: contact.id,
-                          });
+                          // dispatch({
+                          //   type: "DELETE_CONTACT",
+                          //   payload: contact.id,
+                          // });
+                          dispatch(deleteContact({ id: contact.id }));
                           toast.success("Contact deleted successfully.");
                         }}
                         style={styles.deleteButton}

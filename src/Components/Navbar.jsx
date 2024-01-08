@@ -53,7 +53,10 @@ const Navbar = () => {
       <nav style={styles.navbar}>
         <div style={styles.logo}>
           <NavLink to="/" style={styles.navLink}>
-            <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/contact-list-3690517-3074044.png?f=webp&w=50" />
+            <img
+              src="https://cdn.iconscout.com/icon/premium/png-512-thumb/contact-list-3690517-3074044.png?f=webp&w=50"
+              alt=""
+            />
           </NavLink>
         </div>
         <div onClick={toggleMenu} style={styles.menuBtn}>
